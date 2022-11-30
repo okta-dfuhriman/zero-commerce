@@ -1,0 +1,40 @@
+{
+	"name": "zero-commerce",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@emotion/react": "^11.10.5",
+		"@emotion/styled": "^11.10.5",
+		"@mui/icons-material": "^5.10.16",
+		"@mui/material": "^5.10.16",
+		"assert": "^2.0.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-router-dom": "^6.4.3"
+	},
+	"devDependencies": {
+		"@auth0/auth0-react": "^1.12.0",
+		"@mui/lab": "^5.0.0-alpha.110",
+		"@tanstack/react-query": "^4.18.0",
+		"@tanstack/react-query-devtools": "^4.18.0",
+		"@types/react": "^18.0.24",
+		"@types/react-dom": "^18.0.8",
+		"@vitejs/plugin-react": "^2.2.0",
+		"axios": "^1.2.0",
+		"eslint": "^8.28.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-prettier": "^4.2.1",
+		"jose": "^4.11.1",
+		"prettier": "^2.8.0",
+		"typescript": "^4.6.4",
+		"vite": "^3.2.3",
+		"vite-plugin-svgr": "^2.2.2",
+		"vite-tsconfig-paths": "^3.6.0"
+	}
+}

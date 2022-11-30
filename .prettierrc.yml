@@ -1,0 +1,13 @@
+arrowParens: always
+bracketSpacing: true
+jsxBracketSameLine: false
+jsxSingleQuote: true
+printWidth: 80
+quoteProps: as-needed
+rangeStart: 0
+rangeEnd: .inf
+semi: true
+singleQuote: true
+tabWidth: 4
+trailingComma: es5
+useTabs: true
