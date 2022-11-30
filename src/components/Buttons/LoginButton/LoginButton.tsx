@@ -41,7 +41,8 @@ export const LoginButton = ({
 	return (
 		<StyledLoadingButton
 			onClick={handleClick}
-			color='inherit'
+			color='secondary'
+			variant='contained'
 			loading={isLoading?.login}
 			{...props}
 		>
