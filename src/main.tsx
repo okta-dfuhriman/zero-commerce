@@ -2,7 +2,12 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
-import { AppStateProvider, AuthProvider, QueryProvider } from 'providers';
+import {
+	AppStateProvider,
+	AuthProvider,
+	CartProvider,
+	QueryProvider,
+} from 'providers';
 import App from './App';
 import './styles/index.css';
 
@@ -15,7 +20,9 @@ root.render(
 			<AuthProvider>
 				<QueryProvider>
 					<AppStateProvider>
-						<App />
+						<CartProvider>
+							<App />
+						</CartProvider>
 					</AppStateProvider>
 				</QueryProvider>
 			</AuthProvider>
