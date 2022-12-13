@@ -4,9 +4,12 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "vite",
+		"dev": "wrangler pages dev --ip '127.0.0.1' --live-reload --proxy 3000 --port 3001 --local -- npm run dev:app",
+		"dev:app": "vite",
 		"build": "tsc && vite build",
-		"preview": "vite preview"
+		"preview": "wrangler pages dev --ip '127.0.0.1' --live-reload --proxy 4173 --port 3001 --local -- npm run preview:app",
+		"preview:app": "vite preview",
+		"serve:preview": "npm run build && npm run preview"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.10.5",
