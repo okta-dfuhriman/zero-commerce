@@ -86,7 +86,10 @@ export const AuthProvider = ({
 
 	useEffect(() => {
 		const handler = (_authState: AuthState) =>
-			dispatch({ type: 'AUTH_STATE_UPDATED', ..._authState });
+			dispatch({
+				type: 'AUTH_STATE_UPDATED',
+				..._authState,
+			});
 
 		if (authClient) {
 			if (authClient?.authStateManager) {

@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
 	Box,
-	Card,
-	CardActions,
-	CardContent,
-	CardHeader,
 	Dialog,
 	DialogContent,
 	Divider,

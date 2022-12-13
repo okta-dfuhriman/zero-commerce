@@ -3,7 +3,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 
 import { AppBar, PageSpinner, SecureRoute } from 'components';
 import { useAuth } from 'hooks';
-import { Employee } from 'pages';
+import { Customers, Profile } from 'pages';
 
 import { theme } from 'styles/theme';
 import './styles/App.css';
@@ -18,7 +18,9 @@ const App = () => {
 				<PageSpinner loading={isLoading} />
 				<AppBar />
 				<Routes>
-					<Route path='/' element={<Employee />} />
+					<Route path='/customers' element={<Customers />} />
+					<Route path='profile' element={<Profile />} />
+					<Route path='/' element={<Customers />} />
 				</Routes>
 			</ThemeProvider>
 		</>

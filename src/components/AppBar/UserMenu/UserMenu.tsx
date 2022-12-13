@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useIsFetching } from '@tanstack/react-query';
 import {
 	Avatar,
@@ -10,39 +10,20 @@ import {
 	Menu,
 	MenuItem,
 } from '@mui/material';
-import { AccountCircle as PersonIcon } from '@mui/icons-material';
+import {
+	AccountCircle as PersonIcon,
+	People as CustomersIcon,
+} from '@mui/icons-material';
 
 import { LoadingButton } from 'components/Buttons';
-import { useAuth, useGetUserQuery } from 'hooks';
+import { useGetUserQuery } from 'hooks';
 import { LogoutMenuItem } from './LogoutMenuItem';
 
-interface MenuItem {
-	key: string;
-	icon?: React.ReactNode;
-	path: string;
-	name: string;
-}
-
-export interface UserMenuProps {
-	menuItems?: MenuItem[];
-}
-
-const _menuItems: MenuItem[] = [
-	{
-		key: 'me-page',
-		name: 'Profile',
-		icon: <PersonIcon />,
-		path: '/me',
-	},
-];
-
-export const UserMenu = ({ menuItems = [] }: UserMenuProps) => {
+export const UserMenu = () => {
+	const location = useLocation();
 	const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-	const { authClient } = useAuth();
-	const { data: user } = useGetUserQuery(authClient);
+	const { data: user } = useGetUserQuery();
 	const isLoadingUser = useIsFetching(['user']) > 0;
-
-	menuItems = [..._menuItems, ...menuItems];
 
 	const { picture, name } = (user as User.Claims) || {};
 
@@ -97,12 +78,26 @@ export const UserMenu = ({ menuItems = [] }: UserMenuProps) => {
 					},
 				}}
 			>
-				{menuItems.map(({ key, icon, name, path: to }) => (
-					<MenuItem {...{ key, to }} component={Link}>
-						<ListItemIcon>{icon}</ListItemIcon>
-						<ListItemText>{name}</ListItemText>
+				{!location.pathname.includes('profile') && (
+					<MenuItem key='profile-page' to='/profile' component={Link}>
+						<ListItemIcon>
+							<PersonIcon />
+						</ListItemIcon>
+						<ListItemText>Profile</ListItemText>
 					</MenuItem>
-				))}
+				)}
+				{!location.pathname.includes('customers') && (
+					<MenuItem
+						key='customers-page'
+						to='/customers'
+						component={Link}
+					>
+						<ListItemIcon>
+							<CustomersIcon />
+						</ListItemIcon>
+						<ListItemText>Customers</ListItemText>
+					</MenuItem>
+				)}
 				<Divider />
 				<LogoutMenuItem />
 			</Menu>
