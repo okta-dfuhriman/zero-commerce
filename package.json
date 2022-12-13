@@ -16,7 +16,6 @@
 		"@okta/okta-auth-js": "^7.1.1",
 		"@okta/okta-react": "^6.7.0",
 		"auth0": "^2.44.1",
-		"itty-router": "^2.6.6",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-router-dom": "^6.4.3"
