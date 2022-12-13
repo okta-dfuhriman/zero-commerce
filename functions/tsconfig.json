@@ -10,6 +10,7 @@
 		"skipLibCheck": true,
 		"declaration": true,
 		"composite": true,
+		"baseUrl": "./functions",
 		"types": ["@cloudflare/workers-types"]
 	}
 }

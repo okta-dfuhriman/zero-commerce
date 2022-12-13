@@ -1,6 +1,4 @@
-import { getUsers } from '../../_utils/_getUsers';
+import { getUsers } from '../../helpers';
 
-import type { CustomContext } from '@cloudflare/workers-types';
-
-export const onRequestGet = async (context: CustomContext) =>
+export const onRequestGet: PagesFunction<Env> = async (context) =>
 	await getUsers(context);

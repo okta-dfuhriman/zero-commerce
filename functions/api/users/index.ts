@@ -1,4 +1,4 @@
-import { assert, Auth0Client, getUsers } from '../../_utils';
+import { assert, Auth0Client, getUsers } from '../../helpers';
 
 import type { UpdateUserData } from 'auth0';
 
