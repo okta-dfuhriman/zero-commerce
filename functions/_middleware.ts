@@ -25,6 +25,8 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 		let statusText = 'Internal error';
 		let message: any = 'Unknown error';
 
+		console.error(err);
+
 		if (err instanceof ApiError) {
 			status = err.statusCode || status;
 			message = err?.message || message;
@@ -47,8 +49,6 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 				message = body;
 			}
 		} else {
-			console.error(err);
-
 			if (err instanceof Error) {
 				message = err.toString();
 			}
@@ -66,7 +66,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 			}
 		}
 
-		if (typeof message === 'object') {
+		if (typeof message === 'object' && Object.keys(message)?.length > 0) {
 			return new Response(JSON.stringify(message), {
 				status,
 				statusText,

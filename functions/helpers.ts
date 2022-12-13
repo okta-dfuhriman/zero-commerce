@@ -293,6 +293,8 @@ export const getUsers: PagesFunction<Env> = async (context) => {
 		AUTH_API_AUDIENCE: audience,
 	} = env;
 
+	console.log(env);
+
 	const authClient = new Auth0Client({
 		domain,
 		clientId,
