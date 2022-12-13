@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { useAuth } from './useAuth';
 
 import type { AxiosRequestConfig } from 'axios';
 import type { AuthClient } from 'providers';
@@ -7,11 +8,10 @@ import type { AuthClient } from 'providers';
 const { VITE_BASE_API_URL: apiUrl = `${window.location.origin}/api` } =
 	import.meta.env;
 
-export const useGetUsersQuery = (
-	authClient: AuthClient,
-	onSuccess?: Function
-) => {
+export const useGetUsersQuery = (onSuccess?: Function) => {
 	try {
+		const { authClient } = useAuth();
+
 		const getUsersFn = async () => {
 			if (await authClient.isAuthenticated()) {
 				const options: AxiosRequestConfig = {

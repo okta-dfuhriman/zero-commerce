@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import {
-	Button,
 	Container,
-	Dialog,
-	DialogContent,
 	IconButton,
 	Paper,
 	Table,
@@ -12,18 +9,10 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
-	Toolbar,
 	Tooltip,
-	useMediaQuery,
-	useTheme,
 } from '@mui/material';
 // import { ToastContainer, toast } from 'react-toastify';
-import JSONPretty from 'react-json-pretty';
-import {
-	Close as CloseIcon,
-	Visibility as VisibilityIcon,
-} from '@mui/icons-material';
-import 'react-json-pretty/themes/monikai.css';
+import { Visibility as VisibilityIcon } from '@mui/icons-material';
 
 import { Customer, LoadingButton, TableSpinner } from 'components';
 import {
@@ -36,13 +25,11 @@ import {
 import type { GridRowsProp } from '@mui/x-data-grid';
 import type { UserData } from 'auth0';
 
-export const Employee = () => {
+export const Customers = () => {
 	const { authClient, isAuthenticated, isLoading, clearImpersonationTokens } =
 		useAuth();
 
-	const [rows, setRowsData] = useState<GridRowsProp>([
-		{ id: '001', name: 'Dummy User' },
-	]);
+	const [rows, setRowsData] = useState<GridRowsProp>([]);
 	const [dialogOpen, toggleDialog] = useState(false);
 	const [activeUser, setActiveUser] = useState<UserData | undefined>();
 
@@ -54,10 +41,7 @@ export const Employee = () => {
 
 	const rowFormatter = (users: UserData[]) => setRowsData(users);
 
-	const { isLoading: isLoadingGetUsers } = useGetUsersQuery(
-		authClient,
-		rowFormatter
-	);
+	const { isLoading: isLoadingGetUsers } = useGetUsersQuery(rowFormatter);
 	const {
 		isLoading: isLoadingGetImpersonation,
 		mutate: getImpersonationToken,

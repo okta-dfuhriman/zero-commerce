@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
+import { useAuth } from './useAuth';
 
-import type { AuthClient } from 'providers';
-
-export const useGetUserQuery = (authClient: AuthClient) => {
+export const useGetUserQuery = () => {
 	try {
+		const { authClient } = useAuth();
+
 		return useQuery({
 			queryKey: ['user'],
 			queryFn: () => authClient.getUser(),
