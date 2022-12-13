@@ -1,7 +1,7 @@
 _*
-.dev.vars
 !_middleware.ts
 
+.dev.vars
 # Logs
 logs
 *.log
