@@ -240,6 +240,8 @@ export class Auth0Client {
 
 	async getUsers() {
 		const resp = await this.httpClient('/users');
+		console.log('=== getUsers ===');
+		console.log(resp);
 
 		const contentType = resp.headers.get('content-type');
 
@@ -248,7 +250,6 @@ export class Auth0Client {
 		} else if (contentType?.includes('text')) {
 			return resp.text;
 		} else {
-			console.log(resp);
 			throw new ApiError({
 				statusCode: 400,
 				message: JSON.stringify(resp),
@@ -292,8 +293,6 @@ export const getUsers: PagesFunction<Env> = async (context) => {
 		AUTH_CLIENT_SECRET: clientSecret,
 		AUTH_API_AUDIENCE: audience,
 	} = env;
-
-	console.log(env);
 
 	const authClient = new Auth0Client({
 		domain,
