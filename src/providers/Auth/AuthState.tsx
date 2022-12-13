@@ -7,6 +7,8 @@ export const initialAuthState: Auth.InitialState = {
 	isLoading: false,
 	isLoadingLogout: false,
 	isInitialized: false,
+	clearImpersonationTokens: stub,
+	getImpersonationToken: stub,
 	getPermissions: stub,
 	login: stub,
 	logout: stub,
