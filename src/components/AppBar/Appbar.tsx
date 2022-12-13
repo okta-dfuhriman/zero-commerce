@@ -9,7 +9,6 @@ import {
 	Toolbar,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
 import { useIsMutating } from '@tanstack/react-query';
 
 import type { AppBarProps as MuiAppBarProps } from '@mui/material';
@@ -19,6 +18,7 @@ import { Logo } from './Logo';
 import { LoginButton } from 'components/Buttons';
 import { UserMenu } from './UserMenu';
 import { ElevationScroll } from './ElevationScroll';
+import { useAuth } from 'hooks';
 
 export interface AppBarProps extends Omit<MuiAppBarProps, 'title'> {
 	container?: React.ElementType<any>;
@@ -44,7 +44,7 @@ export const AppBar = (props: AppBarProps) => {
 	const { children, className, color, open, title, userMenu, ...rest } =
 		props;
 
-	const { isAuthenticated, isLoading: isLoadingAuth } = useAuth0();
+	const { isAuthenticated, isLoading: isLoadingAuth } = useAuth();
 
 	const isMutating = useIsMutating(['auth']) > 0;
 

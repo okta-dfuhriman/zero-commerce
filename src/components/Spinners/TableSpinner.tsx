@@ -1,26 +1,21 @@
 import { CircularProgress, TableCell, TableRow } from '@mui/material';
 
-import { OktaSpinner } from './OktaSpinner';
-
 import type {
 	CircularProgressProps,
 	TableCellProps,
 	TableRowProps,
 } from '@mui/material';
-import type { OktaSpinnerProps } from './OktaSpinner';
 
 interface TableSpinnerProps {
-	variant?: 'okta' | 'mui';
 	TableCellProps?: TableCellProps;
 	TableRowProps?: TableRowProps;
-	SpinnerProps?: CircularProgressProps | OktaSpinnerProps;
+	SpinnerProps?: CircularProgressProps;
 }
 
 export const TableSpinner = ({
 	SpinnerProps,
 	TableCellProps,
 	TableRowProps,
-	variant = 'mui',
 }: TableSpinnerProps) => {
 	return (
 		<TableRow {...TableRowProps}>
@@ -30,20 +25,10 @@ export const TableSpinner = ({
 				sx={{ py: 16 }}
 				{...TableCellProps}
 			>
-				{variant === 'okta' && (
-					<span style={{ display: 'inline-block' }}>
-						<OktaSpinner
-							className='okta-spinner okta-table-spinner'
-							{...(SpinnerProps as OktaSpinnerProps)}
-						/>
-					</span>
-				)}
-				{variant === 'mui' && (
-					<CircularProgress
-						size={72}
-						{...(SpinnerProps as CircularProgressProps)}
-					/>
-				)}
+				<CircularProgress
+					size={72}
+					{...(SpinnerProps as CircularProgressProps)}
+				/>
 			</TableCell>
 		</TableRow>
 	);

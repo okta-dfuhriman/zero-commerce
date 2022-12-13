@@ -26,5 +26,9 @@
 		"allowSyntheticDefaultImports": true
 	},
 	"include": ["src"],
-	"references": [{ "path": "./tsconfig.node.json" }]
+	"exclude": ["functions"],
+	"references": [
+		{ "path": "./tsconfig.node.json" },
+		{ "path": "./functions/tsconfig.json" }
+	]
 }

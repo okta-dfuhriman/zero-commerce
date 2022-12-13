@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useIsFetching } from '@tanstack/react-query';
 import {
 	Avatar,
 	Box,
-	Button,
 	Divider,
 	ListItemIcon,
 	ListItemText,
 	Menu,
 	MenuItem,
-	Tooltip,
 } from '@mui/material';
-import { useAuth0 } from '@auth0/auth0-react';
 import { AccountCircle as PersonIcon } from '@mui/icons-material';
 
+import { LoadingButton } from 'components/Buttons';
+import { useAuth, useGetUserQuery } from 'hooks';
 import { LogoutMenuItem } from './LogoutMenuItem';
 
 interface MenuItem {
@@ -38,37 +38,40 @@ const _menuItems: MenuItem[] = [
 
 export const UserMenu = ({ menuItems = [] }: UserMenuProps) => {
 	const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-	const { user } = useAuth0() || {};
+	const { authClient } = useAuth();
+	const { data: user } = useGetUserQuery(authClient);
+	const isLoadingUser = useIsFetching(['user']) > 0;
 
 	menuItems = [..._menuItems, ...menuItems];
 
-	const { picture, name } = user || {};
+	const { picture, name } = (user as User.Claims) || {};
 
 	const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) =>
 		setAnchorElUser(event.currentTarget);
 
-	const handleCloseUserMenu = (event: React.MouseEvent<HTMLElement>) =>
+	const handleCloseUserMenu = (_: React.MouseEvent<HTMLElement>) =>
 		setAnchorElUser(null);
 
 	return (
-		<Box sx={{ flexGrow: 0 }}>
-			<Tooltip title='Open Settings'>
-				<Button
-					onClick={handleOpenUserMenu}
-					sx={{ p: 0 }}
-					variant='text'
-					color='inherit'
-					startIcon={<Avatar alt='user avatar' src={picture} />}
-				>
-					{name}
-				</Button>
-			</Tooltip>
+		<Box sx={{ flexGrow: 0, minWidth: '192px' }}>
+			<LoadingButton
+				onClick={handleOpenUserMenu}
+				variant='text'
+				size='large'
+				color='inherit'
+				loading={isLoadingUser}
+				startIcon={
+					!isLoadingUser && <Avatar alt='user avatar' src={picture} />
+				}
+			>
+				{name}
+			</LoadingButton>
 			<Menu
 				id='menu-appbar'
 				anchorEl={anchorElUser}
-				anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+				anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
 				keepMounted
-				transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+				transformOrigin={{ vertical: 'top', horizontal: 'left' }}
 				open={Boolean(anchorElUser)}
 				onClose={handleCloseUserMenu}
 				onClick={handleCloseUserMenu}

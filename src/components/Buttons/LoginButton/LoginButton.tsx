@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import { LoadingButton } from '../LoadingButton';
-import { useAppState } from 'hooks';
+import { useAuth } from 'hooks';
 
 import type { LoadingButtonProps } from '@mui/lab/LoadingButton';
 
@@ -13,21 +13,7 @@ export const LoginButton = ({
 	children,
 	...props
 }: LoginButtonProps) => {
-	const { login, isLoading } = useAppState();
-
-	const handleClick = () => {
-		if (!isLoading?.login) {
-			const options = {
-				screen_hint: flow,
-			};
-
-			if (flow === 'signup') {
-				options['screen_hint'] = flow;
-			}
-
-			login(options);
-		}
-	};
+	const { login, isLoading } = useAuth();
 
 	const StyledLoadingButton = styled(LoadingButton)({
 		'.MuiLoadingButton-loadingIndicator': {
@@ -40,10 +26,10 @@ export const LoginButton = ({
 
 	return (
 		<StyledLoadingButton
-			onClick={handleClick}
+			onClick={() => login()}
 			color='secondary'
 			variant='contained'
-			loading={isLoading?.login}
+			loading={isLoading}
 			{...props}
 		>
 			{label}

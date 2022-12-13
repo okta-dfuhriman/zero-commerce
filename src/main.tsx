@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
 import {
-	AppStateProvider,
+	AuthClient,
 	AuthProvider,
 	CartProvider,
 	QueryProvider,
@@ -14,18 +14,18 @@ import './styles/index.css';
 const container = document.getElementById('app');
 const root = createRoot(container!);
 
+const authClient = new AuthClient();
+
 root.render(
 	<StrictMode>
 		<BrowserRouter>
-			<AuthProvider>
-				<QueryProvider>
-					<AppStateProvider>
-						<CartProvider>
-							<App />
-						</CartProvider>
-					</AppStateProvider>
-				</QueryProvider>
-			</AuthProvider>
+			<QueryProvider>
+				<AuthProvider {...{ authClient }}>
+					<CartProvider>
+						<App />
+					</CartProvider>
+				</AuthProvider>
+			</QueryProvider>
 		</BrowserRouter>
 	</StrictMode>
 );

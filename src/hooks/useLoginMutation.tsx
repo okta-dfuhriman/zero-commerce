@@ -1,19 +1,30 @@
 import { useMutation } from '@tanstack/react-query';
-import { useAuth0 } from '@auth0/auth0-react';
 
-import type { RedirectLoginOptions } from '@auth0/auth0-spa-js';
+import type {
+	SigninWithRedirectOptions,
+	TokenParams,
+} from '@okta/okta-auth-js';
+import type { AuthClient } from 'providers';
 
-export const useLoginMutation = () => {
+export const useLoginMutation = (authClient: AuthClient) => {
 	try {
-		const { loginWithRedirect } = useAuth0();
+		const audience = authClient?.audience || [];
+
+		let extraParams: TokenParams['extraParams'] = {};
+
+		if (audience?.length > 0) {
+			extraParams['audience'] = audience.join(' ');
+		}
 
 		return useMutation(
-			(options?: RedirectLoginOptions) => loginWithRedirect(options),
+			(options?: SigninWithRedirectOptions) =>
+				authClient?.signInWithRedirect({ extraParams, ...options }),
 			{
 				mutationKey: ['auth', 'login'],
 			}
 		);
 	} catch (error) {
+		console.error(error);
 		throw new Error('useLoginMutation init error');
 	}
 };

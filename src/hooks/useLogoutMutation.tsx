@@ -1,16 +1,19 @@
 import { useMutation } from '@tanstack/react-query';
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth } from './useAuth';
 
-import type { LogoutOptions } from '@auth0/auth0-react';
+import type { SignoutOptions } from '@okta/okta-auth-js';
+import type { AuthClient } from 'providers/Auth/AuthClient';
 
-export const useLogoutMutation = (options?: LogoutOptions) => {
+export const useLogoutMutation = (
+	authClient: AuthClient,
+	options?: SignoutOptions
+) => {
 	try {
-		const { returnTo = window.location.origin } = options || {};
+		const { postLogoutRedirectUri = window.location.origin } =
+			options || {};
 
-		const { logout } = useAuth0();
-
-		const logoutFn = async (options?: LogoutOptions) =>
-			logout({ ...options, returnTo });
+		const logoutFn = async (options?: SignoutOptions) =>
+			authClient.signOut({ ...options, postLogoutRedirectUri });
 
 		return useMutation(logoutFn, {
 			mutationKey: ['auth', 'logout'],

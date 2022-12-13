@@ -1,8 +1,6 @@
 import { Backdrop, CircularProgress, useTheme } from '@mui/material';
 import { useLockBodyScroll } from 'hooks';
 
-import { OktaSpinner } from './OktaSpinner';
-
 import type {
 	BackdropProps,
 	CircularProgressProps,
@@ -12,7 +10,6 @@ import type {
 interface PageSpinnerProps {
 	allowScroll?: boolean;
 	closable?: boolean;
-	variant?: 'okta' | 'mui';
 	fullScreen?: boolean;
 	loading?: boolean;
 	BackdropProps?: BackdropProps;
@@ -23,7 +20,6 @@ export const PageSpinner = ({
 	allowScroll = false,
 	closable = false,
 	fullScreen = false,
-	variant = 'okta',
 	loading = false,
 	LoaderProps,
 	BackdropProps,
@@ -54,16 +50,13 @@ export const PageSpinner = ({
 					...backDropProps,
 				}}
 			>
-				{variant === 'mui' && (
-					<CircularProgress
-						{...{
-							color: 'primary',
-							size: 128,
-							...(LoaderProps as CircularProgressProps),
-						}}
-					/>
-				)}
-				{variant === 'okta' && <OktaSpinner />}
+				<CircularProgress
+					{...{
+						color: 'primary',
+						size: 128,
+						...(LoaderProps as CircularProgressProps),
+					}}
+				/>
 			</Backdrop>
 		</div>
 	);

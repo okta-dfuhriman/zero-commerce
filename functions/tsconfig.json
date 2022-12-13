@@ -9,8 +9,7 @@
 		"strictNullChecks": true,
 		"skipLibCheck": true,
 		"declaration": true,
-		"composite": true
-	},
-	"include": ["vite.config.ts"],
-	"exclude": ["src"]
+		"composite": true,
+		"types": ["@cloudflare/workers-types"]
+	}
 }

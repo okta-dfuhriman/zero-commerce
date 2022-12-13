@@ -1,3 +1,5 @@
 export * from './AppBar';
-export * from './ProtectedRoute';
+export * from './Buttons';
+export * from './Customer';
+export * from './SecureRoute';
 export * from './Spinners';
