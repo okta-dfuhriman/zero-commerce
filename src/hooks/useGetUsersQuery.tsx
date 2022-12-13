@@ -4,7 +4,8 @@ import axios from 'axios';
 import type { AxiosRequestConfig } from 'axios';
 import type { AuthClient } from 'providers';
 
-const { VITE_BASE_API_URL: apiUrl } = import.meta.env;
+const { VITE_BASE_API_URL: apiUrl = `${window.location.origin}/api` } =
+	import.meta.env;
 
 export const useGetUsersQuery = (
 	authClient: AuthClient,
