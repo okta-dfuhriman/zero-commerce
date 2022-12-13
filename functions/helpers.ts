@@ -241,7 +241,19 @@ export class Auth0Client {
 	async getUsers() {
 		const resp = await this.httpClient('/users');
 
-		return (await resp.json()) as UserData[];
+		const contentType = resp.headers.get('content-type');
+
+		if (contentType === 'application/json') {
+			return (await resp.json()) as UserData[];
+		} else if (contentType?.includes('text')) {
+			return resp.text;
+		} else {
+			console.log(resp);
+			throw new ApiError({
+				statusCode: 400,
+				message: JSON.stringify(resp),
+			});
+		}
 	}
 
 	async getUserRoles(id: string) {
