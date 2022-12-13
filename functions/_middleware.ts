@@ -11,10 +11,8 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 		const response = await context.next();
 
 		if (!response.ok) {
-			console.error({
-				status: response?.status,
-				statusText: response?.statusText,
-			});
+			console.log('==== ~response.ok ====');
+			console.error(response);
 			throw response;
 		}
 
@@ -33,11 +31,8 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 		let statusText = 'Internal error';
 		let message: any = 'Unknown error';
 
-		try {
-			console.error(JSON.stringify(err));
-		} catch (_error) {
-			console.error({ err, _error });
-		}
+		console.log('==== error ====');
+		console.error(err);
 
 		if (err instanceof ApiError) {
 			status = err.statusCode || status;
