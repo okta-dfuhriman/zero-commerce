@@ -1,4 +1,5 @@
 _*
+.dev.vars
 !_middleware.ts
 
 # Logs
