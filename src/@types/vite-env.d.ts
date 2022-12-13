@@ -10,6 +10,7 @@ interface ImportMetaEnv {
 	readonly VITE_AUTH_TOKEN_AUTO_RENEW?: string;
 	readonly VITE_AUTH_SERVICES_SYNC_STORAGE?: string;
 	readonly VITE_AUTH_AUTHORIZE_URL?: string;
+	readonly VITE_AUTH_LOGOUT_URL?: string;
 	readonly VITE_AUTH_TOKEN_URL?: string;
 	readonly VITE_AUTH_USERINFO_URL?: string;
 }

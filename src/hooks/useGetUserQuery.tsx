@@ -3,11 +3,23 @@ import { useAuth } from './useAuth';
 
 export const useGetUserQuery = () => {
 	try {
-		const { authClient } = useAuth();
+		const { authClient, isAuthenticated } = useAuth();
+
+		const queryFn = async () => {
+			if (isAuthenticated) {
+				const user = await authClient.getUser();
+
+				if (user?.headers) {
+					delete user.headers;
+				}
+
+				return user;
+			}
+		};
 
 		return useQuery({
 			queryKey: ['user'],
-			queryFn: () => authClient.getUser(),
+			queryFn,
 		});
 	} catch (error) {
 		console.error(error);

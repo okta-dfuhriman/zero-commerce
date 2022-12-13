@@ -9,11 +9,12 @@ export const useLogoutMutation = (
 	options?: SignoutOptions
 ) => {
 	try {
-		const { postLogoutRedirectUri = window.location.origin } =
-			options || {};
-
 		const logoutFn = async (options?: SignoutOptions) =>
-			authClient.signOut({ ...options, postLogoutRedirectUri });
+			authClient.signOut({
+				clearTokensBeforeRedirect: true,
+				revokeAccessToken: false,
+				...options,
+			});
 
 		return useMutation(logoutFn, {
 			mutationKey: ['auth', 'logout'],

@@ -20,7 +20,7 @@ export const PageSpinner = ({
 	allowScroll = false,
 	closable = false,
 	fullScreen = false,
-	loading = false,
+	loading = true,
 	LoaderProps,
 	BackdropProps,
 }: PageSpinnerProps) => {

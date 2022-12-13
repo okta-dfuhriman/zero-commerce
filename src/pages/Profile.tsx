@@ -1,28 +1,15 @@
-import {
-	Box,
-	Card,
-	CardContent,
-	Container,
-	CircularProgress,
-} from '@mui/material';
+import { Box, Card, CardContent, CircularProgress } from '@mui/material';
 import JSONPretty from 'react-json-pretty';
 import 'react-json-pretty/themes/monikai.css';
 
 import { useGetUserQuery } from 'hooks';
+import { Layout } from 'components';
 
 export const Profile = () => {
 	const { data: user, isLoading } = useGetUserQuery();
 
 	return (
-		<Container
-			fixed
-			sx={{
-				maxWidth: '100vw',
-				display: 'flex',
-				justifyContent: 'center',
-				pt: 6,
-			}}
-		>
+		<Layout>
 			<Card
 				sx={{
 					backgroundColor: '#272822',
@@ -48,6 +35,6 @@ export const Profile = () => {
 					)}
 				</CardContent>
 			</Card>
-		</Container>
+		</Layout>
 	);
 };

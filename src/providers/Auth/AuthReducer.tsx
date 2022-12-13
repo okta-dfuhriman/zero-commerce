@@ -44,6 +44,9 @@ export const AuthReducer: React.Reducer<Auth.State, Auth.Reducer.Action> = (
 				isInitialized: true,
 				isLoading: false,
 			});
+		case 'LOGOUT_STARTED': {
+			return responder();
+		}
 		case 'LOGIN_COMPLETE':
 		case 'LOGOUT_COMPLETE':
 			return responder({ isLoading: false });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	AppBar as MuiAppBar,
 	Box,
@@ -8,7 +8,7 @@ import {
 	Divider,
 	Toolbar,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useIsMutating } from '@tanstack/react-query';
 
 import type { AppBarProps as MuiAppBarProps } from '@mui/material';
@@ -18,7 +18,7 @@ import { Logo } from './Logo';
 import { LoginButton } from 'components/Buttons';
 import { UserMenu } from './UserMenu';
 import { ElevationScroll } from './ElevationScroll';
-import { useAuth } from 'hooks';
+import { useAuth, useGetUserQuery } from 'hooks';
 
 export interface AppBarProps extends Omit<MuiAppBarProps, 'title'> {
 	container?: React.ElementType<any>;
@@ -27,28 +27,47 @@ export interface AppBarProps extends Omit<MuiAppBarProps, 'title'> {
 	userMenu?: JSX.Element | boolean;
 }
 
-export interface Pages {
+export interface Page {
 	name: string;
 	path: string;
 	icon?: React.ReactNode;
 }
 
-const pages: Pages[] = [
-	// {
-	// 	name: 'Tenants',
-	// 	path: '/tenants',
-	// },
-];
+// const pages: Pages[] = [
+// 	{
+// 		name: 'Tenants',
+// 		path: '/tenants',
+// 	},
+// ];
 
 export const AppBar = (props: AppBarProps) => {
+	const location = useLocation();
 	const { children, className, color, open, title, userMenu, ...rest } =
 		props;
+	const [pages, setPages] = useState<Page[] | []>([]);
 
 	const { isAuthenticated, isLoading: isLoadingAuth } = useAuth();
+	const { data: user, isLoading: isLoadingGetUser } = useGetUserQuery();
 
 	const isMutating = useIsMutating(['auth']) > 0;
 
 	const isLoading = isLoadingAuth || isMutating;
+
+	useEffect(() => {
+		if (
+			isAuthenticated &&
+			!isLoadingGetUser &&
+			user &&
+			(user['rocks.atko.fabriship/roles'] as string[])?.includes('admin')
+		) {
+			setPages((_pages) => {
+				if (_pages.findIndex(({ name }) => name !== 'Customers') > 0) {
+					return [..._pages];
+				}
+				return [{ name: 'Customers', path: '/customers' }];
+			});
+		}
+	}, [isAuthenticated, isLoadingGetUser, user]);
 
 	return (
 		<ElevationScroll>
@@ -74,23 +93,15 @@ export const AppBar = (props: AppBarProps) => {
 									xs: 'center',
 									sm: 'flex-start',
 								},
-								alignItems: 'center',
+								alignItems: 'stretch',
 							}}
 						>
 							<Logo>Zero Commerce</Logo>
-							{pages?.length > 0 && (
-								<Divider
-									orientation='vertical'
-									variant='middle'
-									flexItem
-									light
-									sx={{ borderColor: 'inherit' }}
-								/>
-							)}
 							<Box
 								sx={{
 									display: { xs: 'none', sm: 'flex' },
 									justifyContent: 'flex-start',
+									alignItems: 'end',
 									flex: 11,
 									mx: 2,
 								}}
@@ -101,8 +112,11 @@ export const AppBar = (props: AppBarProps) => {
 											key={pageName}
 											component={Link}
 											to={path}
+											disabled={
+												location?.pathname === path
+											}
 											sx={{
-												color: 'white',
+												color: 'inherit',
 												display: 'block',
 											}}
 										>

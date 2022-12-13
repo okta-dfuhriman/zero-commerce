@@ -14,7 +14,7 @@ import {
 // import { ToastContainer, toast } from 'react-toastify';
 import { Visibility as VisibilityIcon } from '@mui/icons-material';
 
-import { Customer, LoadingButton, TableSpinner } from 'components';
+import { Customer, Layout, TableSpinner } from 'components';
 import {
 	useAuth,
 	useGetImpersonationTokenMutation,
@@ -39,9 +39,8 @@ export const Customers = () => {
 		clearImpersonationTokens();
 	};
 
-	const rowFormatter = (users: UserData[]) => setRowsData(users);
-
-	const { isLoading: isLoadingGetUsers } = useGetUsersQuery(rowFormatter);
+	const { data: users = [], isLoading: isLoadingGetUsers } =
+		useGetUsersQuery();
 	const {
 		isLoading: isLoadingGetImpersonation,
 		mutate: getImpersonationToken,
@@ -60,14 +59,7 @@ export const Customers = () => {
 	} = useSomethingApi(authClient, 'POST');
 
 	return (
-		<Container
-			sx={{
-				maxWidth: '100vw',
-				display: 'flex',
-				justifyContent: 'center',
-				pt: 6,
-			}}
-		>
+		<Layout>
 			<TableContainer
 				component={Paper}
 				sx={{ maxWidth: 'xl' }}
@@ -88,15 +80,15 @@ export const Customers = () => {
 							/>
 						)}
 						{!isLoadingGetUsers &&
-							rows.map((row) => {
-								const { user_id, name, email } = row;
+							users.map((user) => {
+								const { user_id, name, email } = user;
 
 								return (
 									<TableRow
 										key={user_id}
 										hover
 										onClick={() => {
-											setActiveUser(row);
+											setActiveUser(user);
 											toggleDialog(true);
 										}}
 									>
@@ -131,6 +123,6 @@ export const Customers = () => {
 				customer={activeUser}
 				onClose={handleCloseDialog}
 			/>
-		</Container>
+		</Layout>
 	);
 };

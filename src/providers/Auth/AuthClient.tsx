@@ -31,6 +31,7 @@ const {
 	VITE_AUTH_TOKEN_AUTO_RENEW: AUTO_RENEW = true,
 	VITE_AUTH_SERVICES_SYNC_STORAGE: SYNC_STORAGE = false,
 	VITE_AUTH_AUTHORIZE_URL: AUTHORIZE_URL,
+	VITE_AUTH_LOGOUT_URL: LOGOUT_URL = '/v2/logout',
 	VITE_AUTH_TOKEN_URL: TOKEN_URL,
 	VITE_AUTH_USERINFO_URL: USERINFO_URL,
 	MODE = 'dev',
@@ -68,6 +69,7 @@ export class AuthClient extends OktaAuth {
 			authorizeUrl: _authorizeUrl = AUTHORIZE_URL,
 			tokenUrl: _tokenUrl = TOKEN_URL,
 			userinfoUrl: _userinforUrl = USERINFO_URL,
+			logoutUrl: _logoutUrl = LOGOUT_URL,
 		} = options || {};
 
 		if (!Array.isArray(scopes)) {
@@ -78,12 +80,14 @@ export class AuthClient extends OktaAuth {
 			}
 		}
 
-		const { issuer, authorizeUrl, tokenUrl, userinfoUrl } = getAuthUrls({
-			issuer: _issuer,
-			authorizeUrl: _authorizeUrl,
-			tokenUrl: _tokenUrl,
-			userinfoUrl: _userinforUrl,
-		});
+		const { issuer, authorizeUrl, logoutUrl, tokenUrl, userinfoUrl } =
+			getAuthUrls({
+				issuer: _issuer,
+				authorizeUrl: _authorizeUrl,
+				logoutUrl: _logoutUrl,
+				tokenUrl: _tokenUrl,
+				userinfoUrl: _userinforUrl,
+			});
 
 		const {
 			autoRenew = AUTO_RENEW || AUTO_RENEW === 'true',
@@ -93,6 +97,7 @@ export class AuthClient extends OktaAuth {
 		const authOptions: Auth.Client.Options = {
 			issuer,
 			authorizeUrl,
+			logoutUrl,
 			tokenUrl,
 			userinfoUrl,
 			clientId,
