@@ -347,11 +347,17 @@ export const getUsers: PagesFunction<Env> = async (context) => {
 		}
 
 		const user = await authClient?.getUser(id as string, options);
-		console.log(user);
-		response = new Response(JSON.stringify(user));
-	}
 
-	response = new Response(JSON.stringify(await authClient?.getUsers()));
+		console.log(user);
+
+		response = new Response(JSON.stringify(user));
+	} else {
+		const users = (await authClient?.getUsers()) || [];
+
+		console.log(users);
+
+		response = new Response(JSON.stringify(users));
+	}
 
 	response.headers.set('content-type', 'application/json');
 
