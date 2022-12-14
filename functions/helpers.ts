@@ -157,9 +157,8 @@ export class Auth0Client {
 		};
 
 		const resp = await fetch(url, options);
-		console.log(resp.clone());
 		if (!resp.ok || resp?.status >= 400) {
-			console.log('=== getAccessToken ===');
+			console.log('=== getAccessToken ERROR ===');
 			throw resp.clone();
 			// const { status: statusCode = 401, statusText } = resp || {};
 			// throw new ApiError({
@@ -169,6 +168,10 @@ export class Auth0Client {
 			// });
 		}
 
+		const _resp = resp.clone();
+		console.log('=== getAccessToken ===');
+		console.log({ status: _resp.status, statusText: _resp.statusText });
+		console.log(await _resp.json());
 		const { access_token } = (await resp.json()) as GetAccessTokenResponse;
 
 		return access_token;
