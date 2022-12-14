@@ -26,6 +26,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 		if (!response.ok || response?.status >= 400) {
 			console.log('==== ~response.ok ====');
 			console.error(response);
+			console.error(JSON.stringify(response));
 			throw response;
 		}
 
