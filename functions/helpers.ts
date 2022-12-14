@@ -241,11 +241,13 @@ export class Auth0Client {
 	async getUsers() {
 		const resp = await this.httpClient('/users');
 		console.log('=== getUsers ===');
-		console.log(resp);
+
+		const _resp = resp.clone();
+		console.log(_resp);
 
 		const contentType = resp.headers.get('content-type');
 
-		if (contentType === 'application/json') {
+		if (contentType?.includes('application/json')) {
 			return (await resp.json()) as UserData[];
 		} else if (contentType?.includes('text')) {
 			return resp.text;
