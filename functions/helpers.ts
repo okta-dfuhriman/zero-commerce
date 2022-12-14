@@ -75,7 +75,10 @@ const ok = (actual?: any, message?: string | Error) => {
 	}
 
 	if (failed) {
-		throw new AssertionError({ actual, expected, message });
+		const error = new AssertionError({ actual, expected, message });
+		console.log('=== assertionError ===');
+		console.log(error);
+		throw error;
 	}
 };
 

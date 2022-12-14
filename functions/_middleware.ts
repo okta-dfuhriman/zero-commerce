@@ -41,6 +41,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 		let details: any;
 
 		console.log('==== error ====');
+		console.log(typeof err);
 		console.error(err);
 		console.error(JSON.stringify(err));
 
