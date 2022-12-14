@@ -41,6 +41,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 		console.log('==== error ====');
 		console.error(err);
+		console.error(JSON.stringify(err));
 
 		if (err instanceof ApiError) {
 			status = err.statusCode || status;

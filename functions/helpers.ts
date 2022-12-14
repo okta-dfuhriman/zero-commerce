@@ -202,9 +202,10 @@ export class Auth0Client {
 
 		const resp = await fetch(url, _options);
 
-		if (!resp.ok) {
+		if (!resp.ok || resp?.status >= 400) {
 			const _resp = resp.clone();
-
+			console.log('=== httpClient ===');
+			console.error(_resp);
 			throw _resp;
 		}
 
@@ -252,10 +253,7 @@ export class Auth0Client {
 		} else if (contentType?.includes('text')) {
 			return resp.text;
 		} else {
-			throw new ApiError({
-				statusCode: 400,
-				message: JSON.stringify(resp),
-			});
+			throw _resp;
 		}
 	}
 
