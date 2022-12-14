@@ -205,7 +205,7 @@ export class Auth0Client {
 		if (!resp.ok || resp?.status >= 400) {
 			const _resp = resp.clone();
 			console.log('=== httpClient ===');
-			console.error(_resp);
+			console.error(await _resp.json());
 			throw _resp;
 		}
 
