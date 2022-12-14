@@ -171,9 +171,11 @@ export class Auth0Client {
 		const _resp = resp.clone();
 		console.log('=== getAccessToken ===');
 		console.log({ status: _resp.status, statusText: _resp.statusText });
-		console.log(await _resp.json());
-		const { access_token } = (await resp.json()) as GetAccessTokenResponse;
 
+		const body = (await _resp.json()) as GetAccessTokenResponse;
+		const { access_token } = body || {};
+
+		console.log(access_token);
 		return access_token;
 	}
 
