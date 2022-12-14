@@ -38,6 +38,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 		let status = 500;
 		let statusText = 'Internal error';
 		let message: any = 'Unknown error';
+		let details: any;
 
 		console.log('==== error ====');
 		console.error(err);
@@ -46,18 +47,18 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 		if (err instanceof ApiError) {
 			status = err.statusCode || status;
 			message = err?.message || message;
+			details = err?.details || {};
 		}
 
 		if (err instanceof Response) {
-			const body = err?.body ? await err.json() : message;
+			const body =
+				err?.body && !err?.bodyUsed ? await err.json() : message;
 			console.log(body);
 
 			status = err?.status || status;
 			statusText = err?.statusText || statusText;
 
-			if (typeof body === 'string') {
-				message = body;
-			} else if ((body as Auth0Error)?.statusCode) {
+			if ((body as Auth0Error)?.statusCode) {
 				status = (body as Auth0Error)?.statusCode;
 				statusText = (body as Auth0Error)?.error;
 				message = (body as Auth0Error)?.message;
@@ -66,16 +67,15 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 			}
 		} else {
 			if (err instanceof Error) {
-				message = err.toString();
+				message = err?.message;
 			}
 
 			if (err instanceof AssertionError) {
 				const { actual, expected, message: _message } = err || {};
 				status = 400;
 				statusText = 'Assertion Error';
-
-				message = {
-					message: _message,
+				message = _message;
+				details = {
 					actual,
 					expected,
 				};
@@ -90,9 +90,13 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 			});
 		}
 
-		return new Response(message, {
-			status,
-			statusText,
-		});
+		if (status >= 400) {
+			return new Response(message, {
+				status,
+				statusText,
+			});
+		}
+
+		return new Response(undefined, { status, statusText });
 	}
 };

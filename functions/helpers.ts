@@ -10,6 +10,7 @@ export interface ApiErrorInput {
 	statusCode: number;
 	statusText?: string;
 	message?: string;
+	details?: any;
 	stackTrace?: string;
 }
 
@@ -17,15 +18,18 @@ export class ApiError extends Error {
 	statusCode: ApiErrorInput['statusCode'];
 	statusText?: ApiErrorInput['statusText'];
 	stackTrace?: ApiErrorInput['stackTrace'];
+	details?: ApiErrorInput['details'];
 
 	constructor(input: ApiErrorInput) {
-		const { statusCode, statusText, message, stackTrace } = input || {};
+		const { statusCode, statusText, message, stackTrace, details } =
+			input || {};
 
 		super(message);
 
 		this.statusCode = statusCode || 500;
 		this.statusText = statusText;
 		this.stackTrace = stackTrace;
+		this.details = details;
 	}
 }
 
@@ -204,8 +208,15 @@ export class Auth0Client {
 
 		if (!resp.ok || resp?.status >= 400) {
 			const _resp = resp.clone();
+			const body = await _resp.json();
 			console.log('=== httpClient ===');
-			console.error(await _resp.json());
+			console.error(body);
+			throw new ApiError({
+				statusCode: _resp?.status,
+				statusText: _resp?.statusText,
+				details: body,
+				message: 'HttpClient error',
+			});
 			throw _resp;
 		}
 
