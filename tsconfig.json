@@ -25,10 +25,6 @@
 		"skipLibCheck": true,
 		"allowSyntheticDefaultImports": true
 	},
-	"include": ["src"],
-	"exclude": ["functions"],
-	"references": [
-		{ "path": "./tsconfig.node.json" },
-		{ "path": "./functions/tsconfig.json" }
-	]
+	"include": ["src", "api"],
+	"references": [{ "path": "./tsconfig.node.json" }]
 }
