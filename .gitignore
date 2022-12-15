@@ -1,6 +1,5 @@
-_*
-!_middleware.ts
-!_worker.ts
+
+_template*
 
 .dev.vars
 # Logs
