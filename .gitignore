@@ -1,5 +1,6 @@
 _*
 !_middleware.ts
+!_worker.ts
 
 .dev.vars
 # Logs
@@ -117,3 +118,6 @@ build
 *.njsproj
 *.sln
 *.sw?
+.vercel
+.env
+.env
