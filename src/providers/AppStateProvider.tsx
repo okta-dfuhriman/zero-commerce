@@ -33,17 +33,6 @@ export const AppStateProvider = ({ children }: AppState.Provider.Props) => {
 	const { getAccessTokenSilently, isAuthenticated, user } = useAuth0();
 	const { mutate: _login } = useLoginMutation();
 
-	React.useEffect(() => {
-		if (isAuthenticated) {
-			getPermissions().then((permissions) =>
-				dispatch({
-					type: 'PERMISSIONS_FETCHED',
-					payload: { permissions },
-				})
-			);
-		}
-	}, [isAuthenticated]);
-
 	const getAccessToken = async () => {
 		const accessToken = await getAccessTokenSilently();
 
@@ -54,18 +43,6 @@ export const AppStateProvider = ({ children }: AppState.Provider.Props) => {
 		}
 
 		return accessToken;
-	};
-
-	const getPermissions = async () => {
-		const accessTokenString = await getAccessToken();
-
-		const { scope } = jose.decodeJwt(accessTokenString);
-
-		if (scope) {
-			return scope.split(' ');
-		}
-
-		return [];
 	};
 
 	const login = (options: RedirectLoginOptions) => {
@@ -79,7 +56,6 @@ export const AppStateProvider = ({ children }: AppState.Provider.Props) => {
 			...state,
 			dispatch,
 			getAccessToken,
-			getPermissions,
 			login,
 		}),
 		[state]

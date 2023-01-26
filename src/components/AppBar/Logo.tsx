@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import { Link } from 'react-router-dom';
 import type { SxProps, TypographyProps } from '@mui/material';
 
 export const Logo = ({ children, sx: _sx, ...props }: TypographyProps) => {
@@ -11,11 +12,13 @@ export const Logo = ({ children, sx: _sx, ...props }: TypographyProps) => {
 		..._sx,
 	};
 	return (
-		<Box {...{ sx }}>
-			<img
-				src='/logos/logo_transparent.png'
-				style={{ maxHeight: 'inherit' }}
-			/>
-		</Box>
+		<Link to='/'>
+			<Box {...{ sx }}>
+				<img
+					src='/logos/logo_transparent.png'
+					style={{ maxHeight: 'inherit' }}
+				/>
+			</Box>
+		</Link>
 	);
 };

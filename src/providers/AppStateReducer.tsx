@@ -42,8 +42,6 @@ export const AppStateReducer: React.Reducer<
 
 	switch (type) {
 		case 'LOGIN_STARTED':
-		case 'PERMISSIONS_FETCHED':
-			return _default();
 		case 'ERROR':
 			newState = {
 				isLoading: false,

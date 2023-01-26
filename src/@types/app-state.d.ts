@@ -27,11 +27,7 @@ declare global {
 
 			type ActionPayload = Partial<AppState.State>;
 
-			type ActionType =
-				| 'ERROR'
-				| 'ERROR_RESET'
-				| 'LOGIN_STARTED'
-				| 'PERMISSIONS_FETCHED';
+			type ActionType = 'ERROR' | 'ERROR_RESET' | 'LOGIN_STARTED';
 		}
 
 		type InitialState = Omit<AppState.State, 'getAccessToken'>;
@@ -41,7 +37,6 @@ declare global {
 				all?: boolean;
 				login?: boolean;
 			};
-			permissions?: string[];
 			error?: any;
 			getAccessToken: () => Promise<string>;
 			login: (options: RedirectLoginOptions) => void;
